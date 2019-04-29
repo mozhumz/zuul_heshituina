@@ -1,0 +1,39 @@
+# spring
+spring:
+  application:
+    name: zuul
+  # datasource
+  datasource:
+    # druid
+    druid:
+      url: jdbc:mysql://localhost:3306/heshituina_usermanage_pidu?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+      username: root
+      password: 123456
+# log
+#logging:
+#  level:
+#    com.mozhumz.zuul.zuul-heshituina: info
+
+server:
+  port: 8080
+zuul:
+  ignored-patterns:
+    - '*'
+  routes:
+    login:
+      path: /
+      serviceId: wisdom-platform
+#    users:
+#      path: /myusers/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8888/eureka/
+  instance:
+    ip-address: true
+    metadata-map:
+      zone: primary
+
+
+
