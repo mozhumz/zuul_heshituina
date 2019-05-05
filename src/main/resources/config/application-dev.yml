@@ -16,22 +16,53 @@ spring:
 
 server:
   port: 8080
+
+#zuul
 zuul:
-  ignored-patterns:
-    - '*'
+  ignore-local-service: false
+  sensitive-headers:
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+
+#  ignored-patterns:
+#    - '*'
   routes:
+
+#    zuul:
+#      path: /zuul/**
+#      serviceId: zuul
+#    usermanage:
+#      path: /usermanage/**
+#      serviceId: usermanage
     login:
-      path: /
+      path: /wisdom-platform/**
       serviceId: wisdom-platform
-#    users:
-#      path: /myusers/**
+
+#hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 60000
+
+#ribbon
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:8888/eureka/
   instance:
-    ip-address: true
+    instance-id: zuul
+    prefer-ip-address: true
+#    ip-address: true
     metadata-map:
       zone: primary
 

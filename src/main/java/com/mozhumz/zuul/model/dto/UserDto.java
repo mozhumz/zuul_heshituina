@@ -1,17 +1,18 @@
-package com.mozhumz.zuul.model.entity;
+package com.mozhumz.zuul.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -24,13 +25,11 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_user")
 @ApiModel(value="User对象", description="用户表")
-public class User extends Model<User> {
+public class UserDto extends Model<UserDto> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty(value = "账号")
@@ -40,17 +39,16 @@ public class User extends Model<User> {
     private String password;
 
     @ApiModelProperty(value = "拥有的角色id 对应t_role 如',1,2,3,'")
-    @TableField("roleIdStr")
     private String roleIdStr;
 
-    @TableField("createDate")
     private LocalDateTime createDate;
 
-    @TableField("updateDate")
     private LocalDateTime updateDate;
 
     @ApiModelProperty(value = "1 正常 2禁用")
     private Integer state;
+
+    private String token;
 
 
     @Override

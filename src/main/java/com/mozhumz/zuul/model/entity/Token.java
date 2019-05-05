@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 角色表
+ * 认证中心-web应用-用户登录成功的令牌
  * </p>
  *
  * @author lshaci
@@ -24,16 +24,17 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_role")
-@ApiModel(value="Role对象", description="角色表")
-public class Role extends Model<Role> {
+@TableName("t_token")
+@ApiModel(value="Token对象", description="认证中心-web应用-用户登录成功的令牌")
+public class Token extends Model<Token> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String name;
+    @ApiModelProperty(value = "令牌")
+    private String token;
 
     @TableField("createDate")
     private LocalDateTime createDate;

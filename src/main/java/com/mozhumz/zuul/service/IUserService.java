@@ -1,5 +1,6 @@
 package com.mozhumz.zuul.service;
 
+import com.mozhumz.zuul.model.dto.UserDto;
 import com.mozhumz.zuul.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,8 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author lshaci
- * @since 2019-04-29
+ * @since 2019-05-05
  */
 public interface IUserService extends IService<User> {
+    UserDto login(User user);
 
+    UserDto getLoginUser();
 }
