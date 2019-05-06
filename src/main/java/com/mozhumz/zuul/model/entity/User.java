@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author lshaci
- * @since 2019-05-05
+ * @since 2019-05-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -50,7 +50,7 @@ public class User extends Model<User> {
     private LocalDateTime updateDate;
 
     @ApiModelProperty(value = "1 正常 2禁用")
-    private Integer state;
+    private Boolean state;
 
 
     @Override

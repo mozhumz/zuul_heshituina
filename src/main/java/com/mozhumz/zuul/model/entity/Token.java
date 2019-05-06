@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +21,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author lshaci
- * @since 2019-05-05
+ * @since 2019-05-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -33,14 +35,18 @@ public class Token extends Model<Token> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    private String username;
+
     @ApiModelProperty(value = "令牌")
     private String token;
 
     @TableField("createDate")
-    private LocalDateTime createDate;
+    private Date createDate;
 
     @TableField("updateDate")
-    private LocalDateTime updateDate;
+    private Date updateDate;
+
+    private Integer state;
 
 
     @Override

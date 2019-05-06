@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author lshaci
- * @since 2019-05-05
+ * @since 2019-05-06
  */
 public interface ITokenWebMapper extends BaseMapper<TokenWeb> {
 

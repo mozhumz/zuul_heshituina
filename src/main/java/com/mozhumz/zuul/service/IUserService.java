@@ -10,10 +10,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author lshaci
- * @since 2019-05-05
+ * @since 2019-05-06
  */
 public interface IUserService extends IService<User> {
     UserDto login(User user);
 
+    UserDto addUser(User user);
+
     UserDto getLoginUser();
+
+
 }
