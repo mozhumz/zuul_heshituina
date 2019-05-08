@@ -35,7 +35,7 @@ public class Token extends Model<Token> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private String username;
+    private Long userId;
 
     @ApiModelProperty(value = "令牌")
     private String token;
@@ -46,6 +46,9 @@ public class Token extends Model<Token> {
     @TableField("updateDate")
     private Date updateDate;
 
+    /**
+     * 1正常
+     */
     private Integer state;
 
 

@@ -1,10 +1,15 @@
 package com.mozhumz.zuul.utils;
 
+import com.mozhumz.zuul.constant.CommonConstant;
+import com.mozhumz.zuul.model.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import top.lshaci.framework.web.exception.LoginException;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -14,6 +19,12 @@ import javax.servlet.http.HttpSession;
 @Component
 @Slf4j
 public class SessionUtil {
+    public static RedisTemplate redisTemplate;
+
+    @Resource
+    public void setRedisTemplate(RedisTemplate redisTemplate){
+        SessionUtil.redisTemplate=redisTemplate;
+    }
 
     /**
      * 获取session
@@ -23,5 +34,18 @@ public class SessionUtil {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
         return requestAttributes.getRequest().getSession();
+    }
+
+    /**
+     * 获取登录用户
+     * @return
+     */
+    public static UserDto getLoginUser(){
+        String token= (String) getSession().getAttribute(CommonConstant.token);
+        if(token==null){
+            throw new LoginException();
+        }
+        UserDto userDto= (UserDto) redisTemplate.opsForValue().get(CommonConstant.sessionUser+token);
+        return userDto;
     }
 }

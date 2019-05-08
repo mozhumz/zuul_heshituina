@@ -17,3 +17,10 @@ logging:
 mybatis-plus:
   type-aliases-package: com.mozhumz.zuul.model.entity,com.mozhumz.zuul.model.*
   mapper-locations: classpath:mappers/*Mapper.xml
+
+login:
+  url: http://localhost:8080/index.html
+
+session-redis:
+  #秒
+  timeout: 7200

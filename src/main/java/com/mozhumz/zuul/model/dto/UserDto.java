@@ -23,10 +23,10 @@ import java.time.LocalDateTime;
  * @since 2019-05-05
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+//@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="User对象", description="用户表")
-public class UserDto extends Model<UserDto> {
+public class UserDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,10 +50,5 @@ public class UserDto extends Model<UserDto> {
 
     private String token;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

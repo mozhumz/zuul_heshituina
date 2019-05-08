@@ -14,7 +14,7 @@ public class HttpUtil {
      * @param outUrl
      * @param sessionId
      */
-    public void logOutWeb(String outUrl,String sessionId){
+    public static void logOutWeb(String outUrl,String sessionId){
         try {
             URL url=new URL(outUrl);
             HttpURLConnection conn= (HttpURLConnection) url.openConnection();

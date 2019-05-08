@@ -65,10 +65,23 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
+        <!--Common util-->
         <dependency>
             <groupId>com.github.mozhumz</groupId>
             <artifactId>common_util</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <!--session -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mozhumz.zuul.mapper.ITokenMapper;
 import com.mozhumz.zuul.model.entity.Token;
+import com.mozhumz.zuul.utils.SessionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import top.lshaci.framework.web.model.JsonResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 
 /**
  * @author huyuanjia
@@ -30,17 +32,39 @@ public class TestController {
 
 
 
+
     @ApiOperation(value = "添加")
     @RequestMapping(value = "/testAdd", method = RequestMethod.POST)
     public Object testAdd() {
-        Token token=new Token();
-        token.setToken("2");
-        token.setCreateDate(null);
+//        Token token=new Token();
+//        token.setToken("2");
+//        token.setCreateDate(null);
+//
+//        Token token2=new Token();
+//        Wrapper wrapper=new UpdateWrapper(token2);
+//        tokenMapper.update(token,wrapper);
+//        Duration duration=Duration.ofMinutes(1);
+        SessionUtil.redisTemplate.opsForValue().set("hyj0508-2","ooo");
 
-        Token token2=new Token();
-        token2.setUsername("1");
-        Wrapper wrapper=new UpdateWrapper(token2);
-        tokenMapper.update(token,wrapper);
+        request.getSession().setAttribute("hyj0508","sss");
+
+        return JsonResponse.success("jj");
+    }
+
+    @ApiOperation(value = "添加")
+    @RequestMapping(value = "/testAdd2", method = RequestMethod.POST)
+    public Object testAdd2() {
+//        Token token=new Token();
+//        token.setToken("2");
+//        token.setCreateDate(null);
+//
+//        Token token2=new Token();
+//        Wrapper wrapper=new UpdateWrapper(token2);
+//        tokenMapper.update(token,wrapper);
+//        Duration duration=Duration.ofMinutes(1);
+//        SessionUtil.redisTemplate.opsForValue().set("hyj0508-2","ooo",duration);
+
+        System.out.println(request.getSession().getAttribute("hyj0508"));
 
         return JsonResponse.success("jj");
     }

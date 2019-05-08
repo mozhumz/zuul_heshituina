@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -44,13 +46,13 @@ public class User extends Model<User> {
     private String roleIdStr;
 
     @TableField("createDate")
-    private LocalDateTime createDate;
+    private Date createDate;
 
     @TableField("updateDate")
-    private LocalDateTime updateDate;
+    private Date updateDate;
 
     @ApiModelProperty(value = "1 正常 2禁用")
-    private Boolean state;
+    private Integer state;
 
 
     @Override
