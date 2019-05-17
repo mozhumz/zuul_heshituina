@@ -3,14 +3,14 @@ package com.mozhumz.zuul.web.controller;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
-import com.mozhumz.zuul.model.dto.UserDto;
+import com.mozhumz.zuul.model.dto.LoginDto;
+import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.User;
 import com.mozhumz.zuul.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,16 +49,15 @@ public class LoginController {
     private Long sessionSeconds;
 
 
-
-    @ApiOperation(value = "登录")
+    @ApiOperation(value = "登录(前端已表单形式提交参数)")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JsonResponse<UserDto> login(@RequestBody User user) {
-        UserDto userDto=userService.login(user);
-        //登录成功 设置session
-        HttpSession session=request.getSession();
-        session.setAttribute(CommonConstant.token,userDto.getToken());
-        Duration duration= Duration.ofSeconds(sessionSeconds);
-        redisTemplate.opsForValue().set(CommonConstant.sessionUser+userDto.getToken(),userDto,duration);
+    public JsonResponse<SessionUser> login(@RequestBody LoginDto user) {
+        SessionUser userDto = userService.login(user);
+        //登录成功 设置session 前端跳转到webUrl
+        HttpSession session = request.getSession();
+        session.setAttribute(CommonConstant.token, userDto.getToken());
+        Duration duration = Duration.ofSeconds(sessionSeconds);
+        redisTemplate.opsForValue().set(CommonConstant.globalSessionUser + userDto.getToken(), userDto, duration);
 
         return JsonResponse.success(userDto);
     }
@@ -70,30 +69,24 @@ public class LoginController {
         return JsonResponse.success(null);
     }
 
-    @ApiOperation(value = "登录检查-获取token 进行重定向")
+    @ApiOperation(value = "登录检查-获取token")
     @RequestMapping(value = "/checkLogin", method = RequestMethod.GET)
     public void checkLogin(String webUrl) throws IOException {
-        String token= (String) request.getSession().getAttribute(CommonConstant.token);
-        if(CheckParamsUtil.check(token)){
+        String token = (String) request.getSession().getAttribute(CommonConstant.token);
+        if (CheckParamsUtil.check(token)) {
             //重定向到应用
             response.sendRedirect(webUrl+"?"+CommonConstant.token+"="+token);
-        }else {
+        } else {
             //重定向到登录页
-            response.sendRedirect(loginUrl);
+            response.sendRedirect(loginUrl+"?webUrl="+webUrl);
         }
     }
 
     @ApiOperation(value = "token校验")
-    @RequestMapping(value = "/checkToken", method = RequestMethod.GET)
-    public void checkToken(CheckTokenDto checkTokenDto) throws IOException {
-        if(userService.checkToken(checkTokenDto)){
-            //重定向到应用
-            response.sendRedirect(checkTokenDto.getWebUrl());
-        }else {
-            //重定向到登录页
-            response.sendRedirect(loginUrl);
-        }
+    @RequestMapping(value = "/checkToken", method = RequestMethod.POST)
+    public JsonResponse checkToken(@RequestBody CheckTokenDto checkTokenDto)  {
 
+        return JsonResponse.success(userService.checkToken(checkTokenDto));
     }
 
 

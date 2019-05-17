@@ -1,7 +1,7 @@
 package com.mozhumz.zuul;
 
 import com.mozhumz.zuul.constant.CommonConstant;
-import com.mozhumz.zuul.model.dto.UserDto;
+import com.mozhumz.zuul.model.dto.SessionUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +23,7 @@ public class TestApplication {
 
     @Test
     public void testRedis(){
-        UserDto userDto=new UserDto();
+        SessionUser userDto=new SessionUser();
         userDto.setToken("ss");
         Duration duration=Duration.ofMinutes(1);
         redisTemplate.opsForValue().set(CommonConstant.sessionUser+"hyj",userDto,duration);

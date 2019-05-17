@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 //@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="User对象", description="用户表")
-public class UserDto implements Serializable {
+public class SessionUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

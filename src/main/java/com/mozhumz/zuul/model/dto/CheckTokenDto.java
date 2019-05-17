@@ -8,7 +8,6 @@ import lombok.Data;
  */
 @Data
 public class CheckTokenDto {
-    private String webUrl;
     private String OutUrl;
     private String sessionId;
 

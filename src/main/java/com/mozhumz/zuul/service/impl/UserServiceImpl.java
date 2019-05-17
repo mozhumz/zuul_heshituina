@@ -8,7 +8,8 @@ import com.mozhumz.zuul.enums.ErrorCode;
 import com.mozhumz.zuul.mapper.ITokenMapper;
 import com.mozhumz.zuul.mapper.ITokenWebMapper;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
-import com.mozhumz.zuul.model.dto.UserDto;
+import com.mozhumz.zuul.model.dto.LoginDto;
+import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.Token;
 import com.mozhumz.zuul.model.entity.TokenWeb;
 import com.mozhumz.zuul.model.entity.User;
@@ -49,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
      * @return
      */
     @Override
-    public UserDto login(User user) {
+    public SessionUser login(LoginDto user) {
         //账号密码检查
         if (user == null || !CheckParamsUtil.check(user.getUsername(), user.getPassword())) {
             throw new BaseException(ErrorCode.LOGIN_ERR.desc);
@@ -63,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         //存储token
         String tokenStr= UUID.randomUUID().toString();
         Token token=new Token();
-        token.setUserId(user.getId());
+        token.setUserId(user1.getId());
         token.setToken(tokenStr);
         token.setCreateDate(new Date());
         token.setUpdateDate(new Date());
@@ -72,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
             tokenMapper.insert(token);
         }catch (DuplicateKeyException e){
             Token token2=new Token();
-            token2.setUserId(user.getId());
+            token2.setUserId(user1.getId());
             Wrapper<Token> wrapper2=new UpdateWrapper<>(token2);
             token.setCreateDate(null);
             token.setState(1);
@@ -80,7 +81,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         }
 
         //组装数据
-        UserDto userDto= new UserDto();
+        SessionUser userDto= new SessionUser();
         BeanUtils.copyProperties(user1,userDto);
         userDto.setToken(tokenStr);
 
@@ -94,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
      * @return
      */
     @Override
-    public UserDto addUser(User user) {
+    public SessionUser addUser(User user) {
         return null;
     }
 
@@ -104,7 +105,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
      * @return
      */
     @Override
-    public UserDto getLoginUser() {
+    public SessionUser getLoginUser() {
         return null;
     }
 

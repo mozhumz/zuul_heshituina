@@ -1,7 +1,8 @@
 package com.mozhumz.zuul.service;
 
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
-import com.mozhumz.zuul.model.dto.UserDto;
+import com.mozhumz.zuul.model.dto.LoginDto;
+import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,11 +15,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-05-06
  */
 public interface IUserService extends IService<User> {
-    UserDto login(User user);
+    SessionUser login(LoginDto user);
 
-    UserDto addUser(User user);
+    SessionUser addUser(User user);
 
-    UserDto getLoginUser();
+    SessionUser getLoginUser();
 
     boolean checkToken(CheckTokenDto checkTokenDto);
 

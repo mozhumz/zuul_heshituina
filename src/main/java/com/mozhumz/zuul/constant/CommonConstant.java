@@ -7,7 +7,7 @@ package com.mozhumz.zuul.constant;
 public class CommonConstant {
     public static  final String token="token";
 
-    public static  final String sessionUser="sessionUser";
+    public static  final String globalSessionUser="globalSessionUser";
 
 
 }
