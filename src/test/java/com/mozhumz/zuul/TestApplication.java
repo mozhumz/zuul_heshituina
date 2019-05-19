@@ -26,9 +26,9 @@ public class TestApplication {
         SessionUser userDto=new SessionUser();
         userDto.setToken("ss");
         Duration duration=Duration.ofMinutes(1);
-        redisTemplate.opsForValue().set(CommonConstant.sessionUser+"hyj",userDto,duration);
-
-        System.out.println(redisTemplate.opsForValue().get(CommonConstant.sessionUser+"hyj"));
+//        redisTemplate.opsForValue().set(CommonConstant.sessionUser+"hyj",userDto,duration);
+//
+//        System.out.println(redisTemplate.opsForValue().get(CommonConstant.sessionUser+"hyj"));
     }
 
 }

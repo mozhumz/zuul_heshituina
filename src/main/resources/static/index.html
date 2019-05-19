@@ -3,29 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <script src="js/vue.js"></script>
+    <script src="js/common/vue.js"></script>
+    <script src="js/common/jquery-3.4.1.min.js"></script>
+    <script src="js/common/md5.js"></script>
+    <script src="js/common/api.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="loginDiv">
         <div>账号</div>
-        <input v-model="username" >
+        <input type="text" v-model="username" >
         <div>密码</div>
         <input type="password" v-model="password" >
     </div>
 
-    <button>登录</button>
+    <button id="loginBtn">登录</button>
 
     <button>忘记密码</button>
 </body>
 
-<script>
-    var a=new Vue({
-  el: '#app',
-  data: {
-    username: '1',
-	password: '1'
-  }
-});
-console.log(a.username);
-</script>
 </html>

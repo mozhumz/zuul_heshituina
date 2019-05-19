@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 # spring
 spring:
   application:
@@ -22,8 +25,7 @@ spring:
 #  level:
 #    com.mozhumz.zuul.zuul-heshituina: info
 
-server:
-  port: 8080
+
 
 #zuul
 zuul:
