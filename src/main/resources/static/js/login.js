@@ -1,12 +1,29 @@
  $(function(){
   var loginV=new Vue({
-   el: '#loginDiv',
+   el: '#btn',
    data: {
      username: '',
  	 password: ''
    }
  });
-console.log("ss:"+hex_md5("123456"+"Mozhumz_Xr_WangWei"));
+ new Vue().$mount('#btn')
+var Main = {
+    data() {
+      return {
+        password: ''
+      }
+    }
+  }
+  var Main2= {
+    data() {
+      return {
+        username: ''
+      }
+    }
+  }
+var Ctor = Vue.extend(Main);
+Vue.extend(Main2);
+new Ctor().$mount('#btn');
 
  $("#loginBtn").click(
 
