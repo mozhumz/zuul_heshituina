@@ -55,16 +55,16 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         if (user == null || !CheckParamsUtil.check(user.getUsername(), user.getPassword())) {
             throw new BaseException(ErrorCode.LOGIN_ERR.desc);
         }
-        Wrapper wrapper = new QueryWrapper(user);
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username",user.getUsername());
         User user1 = userMapper.selectOne(wrapper);
         if (user1 == null
-                || !user1.getPassword().equals(MD5Util.md5(user.getPassword(), MD5Util.DEFAULT_KEY))) {
+                || !MD5Util.checkPwd(user.getPassword(),user1.getPassword())) {
             throw new BaseException(ErrorCode.LOGIN_ERR.desc);
         }
         //存储token
         String tokenStr= UUID.randomUUID().toString();
         Token token=new Token();
-        token.setUserId(user1.getId());
         token.setToken(tokenStr);
         token.setCreateDate(new Date());
         token.setUpdateDate(new Date());
@@ -72,19 +72,19 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
 
             tokenMapper.insert(token);
         }catch (DuplicateKeyException e){
-            Token token2=new Token();
-            token2.setUserId(user1.getId());
-            Wrapper<Token> wrapper2=new UpdateWrapper<>(token2);
-            token.setCreateDate(null);
-            token.setState(1);
-            tokenMapper.update(token,wrapper2);
+//            UpdateWrapper<Token> wrapper2=new UpdateWrapper<>();
+//            wrapper2.eq("userId",user1.getId());
+//            token.setCreateDate(null);
+//            token.setState(1);
+//            tokenMapper.update(token,wrapper2);
+
         }
 
         //组装数据
         SessionUser userDto= new SessionUser();
         BeanUtils.copyProperties(user1,userDto);
         userDto.setToken(tokenStr);
-
+        userDto.setPassword(null);
         return userDto;
     }
 
@@ -118,11 +118,10 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         if(!CheckParamsUtil.check(checkTokenDto.getToken())){
             return false;
         }
-        Token token1=new Token();
-        token1.setToken(checkTokenDto.getToken());
-        token1.setState(1);
 
-        QueryWrapper<Token> queryWrapper=new QueryWrapper<>(token1);
+        QueryWrapper<Token> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("token",checkTokenDto.getToken());
+        queryWrapper.eq("state",1);
         Token token=tokenMapper.selectOne(queryWrapper);
         boolean flag=(token!=null);
         if(flag){

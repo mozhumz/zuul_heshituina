@@ -35,8 +35,6 @@ public class Token extends Model<Token> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Long userId;
-
     @ApiModelProperty(value = "令牌")
     private String token;
 

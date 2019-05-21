@@ -2,7 +2,6 @@ package com.mozhumz.zuul.web.listener;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.Update;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.mapper.ITokenMapper;
 import com.mozhumz.zuul.mapper.ITokenWebMapper;
@@ -10,9 +9,11 @@ import com.mozhumz.zuul.model.entity.Token;
 import com.mozhumz.zuul.model.entity.TokenWeb;
 import com.mozhumz.zuul.utils.HttpUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashMap;
@@ -29,6 +30,10 @@ public class SessionListener implements HttpSessionListener {
     private ITokenMapper tokenMapper;
     @Resource
     private ITokenWebMapper tokenWebMapper;
+    @Resource
+    private HttpServletResponse response;
+    @Value("${login.url}")
+    private String loginUrl;
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
@@ -38,14 +43,13 @@ public class SessionListener implements HttpSessionListener {
             //修改t_token state=2
             Token param = new Token();
             param.setToken(tokenStr);
-            QueryWrapper<Token> queryWrapper = new QueryWrapper<>(param);
+            QueryWrapper<Token> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("token",tokenStr);
             Token token = tokenMapper.selectOne(queryWrapper);
             if (token == null) {
                 return;
             }
-            UpdateWrapper<Token> updateWrapper = new UpdateWrapper<>(param);
-            token.setState(2);
-            tokenMapper.update(token, updateWrapper);
+            tokenMapper.deleteById(token.getId());
 
             //处理t_token_web记录
             Map<String, Object> map = new HashMap<>();
@@ -62,4 +66,5 @@ public class SessionListener implements HttpSessionListener {
 
         }
     }
+
 }
