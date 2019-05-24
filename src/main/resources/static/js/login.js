@@ -1,33 +1,17 @@
  $(function(){
   var loginV=new Vue({
    el: '#btn',
-   data: {
+   data:{
      username: '',
  	 password: ''
-   }
- });
- new Vue().$mount('#btn')
-var Main = {
-    data() {
-      return {
-        password: ''
-      }
-    }
-  }
-  var Main2= {
-    data() {
-      return {
-        username: ''
-      }
-    }
-  }
-var Ctor = Vue.extend(Main);
-Vue.extend(Main2);
-new Ctor().$mount('#btn');
+
+   }});
 
  $("#loginBtn").click(
 
      function(){
+     console.log(loginV.username);
+     console.log(loginV.password);
      if(!loginV.password||!loginV.username){
         alert("用户名或密码不能为空");
         return false;

@@ -20,6 +20,7 @@ import com.mozhumz.zuul.utils.MD5Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.lshaci.framework.common.exception.BaseException;
 
 import javax.annotation.Resource;
@@ -95,6 +96,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
      * @return
      */
     @Override
+    @Transactional
     public SessionUser addUser(User user) {
         return null;
     }
