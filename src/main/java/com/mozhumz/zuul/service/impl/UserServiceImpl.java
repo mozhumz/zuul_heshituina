@@ -5,15 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.enums.ErrorCode;
-import com.mozhumz.zuul.mapper.ITokenMapper;
-import com.mozhumz.zuul.mapper.ITokenWebMapper;
+import com.mozhumz.zuul.mapper.*;
+import com.mozhumz.zuul.model.dto.AddUserDto;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
 import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
-import com.mozhumz.zuul.model.entity.Token;
-import com.mozhumz.zuul.model.entity.TokenWeb;
-import com.mozhumz.zuul.model.entity.User;
-import com.mozhumz.zuul.mapper.IUserMapper;
+import com.mozhumz.zuul.model.entity.*;
 import com.mozhumz.zuul.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mozhumz.zuul.utils.MD5Util;
@@ -43,7 +40,10 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     private ITokenMapper tokenMapper;
     @Resource
     private ITokenWebMapper tokenWebMapper;
-
+    @Resource
+    private IRoleMapper roleMapper;
+    @Resource
+    private IUserRoleMapper userRoleMapper;
     /**
      * 登录
      *
@@ -89,17 +89,7 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         return userDto;
     }
 
-    /**
-     * 新增用户
-     *
-     * @param user
-     * @return
-     */
-    @Override
-    @Transactional
-    public SessionUser addUser(User user) {
-        return null;
-    }
+
 
     /**
      * 获取登录用户
@@ -139,4 +129,5 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
 
         return flag;
     }
+
 }

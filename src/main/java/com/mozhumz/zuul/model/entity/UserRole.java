@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -39,6 +41,12 @@ public class UserRole extends Model<UserRole> {
     @ApiModelProperty(value = "t_user id")
     @TableField("userId")
     private Long userId;
+
+    @TableField("createDate")
+    private Date createDate;
+
+    @TableField("updateDate")
+    private Date updateDate;
 
 
     @Override

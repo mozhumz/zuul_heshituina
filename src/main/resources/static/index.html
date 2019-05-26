@@ -2,71 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet"  href="css/element-ui.css">
+    <link rel="stylesheet"  href="static/css/element-ui.css">
     <title>登录</title>
-    <script src="js/common/vue.js"></script>
-    <script src="js/common/jquery-3.4.1.min.js"></script>
-    <script src="js/common/md5.js"></script>
-    <script src="js/common/api.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/common/element-ui.js"></script>
+    <script src="static/js/common/vue.js"></script>
+    <script src="static/js/common/jquery-3.4.1.min.js"></script>
+    <script src="static/js/common/md5.js"></script>
+    <script src="static/js/common/api.js"></script>
+    <script src="static/js/common/element-ui.js"></script>
+    <script src="static/js/common/util.js"></script>
+    <script src="static/js/login.js"></script>
 </head>
 <style>
-  .el-row {
+    .el-row {
     margin-bottom: 20px;
     &:last-child {
       margin-bottom: 0;
     }
   }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
+
 </style>
 <body>
-    <div id="btn" style="text-align:center;width:50%;margin:0 auto">
-<!--        <div >-->
-<!--            <input type="text" placeholder="账号"  v-model="username" >-->
-<!--        </div>-->
-<!--        <div >-->
-<!--            <input type="password" placeholder="密码" v-model="password" >-->
-<!--        </div>-->
-        <el-input type="text" v-model="username" placeholder="请输入账号"></el-input>
-        <el-input type="text" placeholder="请输入密码" v-model="password" show-password></el-input>
-        <!--<div style="border-bottom:30px">-->
-        <!--</div>-->
-        <!--<div>-->
-        <!--</div>-->
+    <div style="text-align:center;width:50%;margin:0 auto;    color: #12a1e9;
+    font-family: 华文行楷;font-weight: bold;font-size:40px;">
 
-
-
-                <el-button style="width:30%" type="primary" id="loginBtn" >登录</el-button>
-        <div>
-
-            <button>忘记密码</button>
-        </div>
+        <h1>何氏推拿-后台管理</h1>
+    </div>
+    <div style="height:50px;"></div>
+    <div id="main" style="text-align:center;width:30%;margin:0 auto">
         <el-row :gutter="20">
-            <el-col :span="6"><div class="grid-content bg-purple">111</div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple">222</div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple">333</div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple">444</div></el-col>
+            <el-input type="text"  v-model="username" placeholder="请输入账号"></el-input>
         </el-row>
+        <el-row :gutter="20">
+            <el-input type="text" placeholder="请输入密码" v-model="password" show-password></el-input>
+        </el-row>
+        <template>
+            <el-button style="width:61.80%" type="primary" id="loginBtn" >登录</el-button>
+        </template>
+
+        <el-row :gutter="20">
+            <el-col :span="6">
+<!--                <div class="grid-content bg-purple"><el-button>忘记密码</el-button></div>-->
+                <template>
+                    <el-button type="text" id="forgetPwd">忘记密码</el-button>
+                </template>
+            </el-col>
+
+<!--            <el-col :span="6">-->
+<!--                    <template>-->
+<!--                        <el-button id="msgBtn" type="text" @click="open"></el-button>-->
+<!--                    </template>-->
+<!--            </el-col>-->
+        </el-row>
+
+
     </div>
 
 

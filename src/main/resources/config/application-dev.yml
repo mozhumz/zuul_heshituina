@@ -39,15 +39,15 @@ zuul:
 #    - '*'
   routes:
 
-#    zuul:
-#      path: /zuul/**
-#      serviceId: zuul
-#    usermanage:
-#      path: /usermanage/**
-#      serviceId: usermanage
-    login:
-      path: /wisdom-platform/**
-      serviceId: wisdom-platform
+    zuul:
+      path: /zuul/**
+      serviceId: zuul
+    usermanage:
+      path: /usermanage/**
+      serviceId: usermanage
+    balance:
+      path: /balance/**
+      serviceId: balance
 
 #hystrix
 hystrix:

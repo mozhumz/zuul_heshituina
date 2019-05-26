@@ -7,7 +7,8 @@ package com.mozhumz.zuul.enums;
  */
 public enum ErrorCode {
     LOGIN_ERR(10001,"账号或密码错误"),
-
+    PARAM_ERR(10002,"参数错误"),
+    ROLE_ERR(10003,"角色错误"),
     ;
     public Integer code;
     public String desc;

@@ -47,12 +47,9 @@ public class MD5Util {
      */
     public static String getDefaultPwd(){
         //147397e354ea6a1b25bcaa82c2692614
-        return md5("123456",DEFAULT_KEY);
+        return md5(md5("123456",DEFAULT_KEY),PWD_KEY);
     }
 
-    public static void main(String[] args) {
-        System.out.println(md5(getDefaultPwd(),PWD_KEY));
-    }
 
 
 }
