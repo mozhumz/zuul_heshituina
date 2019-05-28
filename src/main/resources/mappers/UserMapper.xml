@@ -13,4 +13,15 @@
         <result column="state" property="state" />
     </resultMap>
 
+
+    <select id="findUserRoleList" parameterType="com.mozhumz.zuul.model.qo.UserRoleQo"
+            resultType="com.mozhumz.zuul.model.entity.Role">
+        select b.* from t_user_role a
+        left join t_role b on a.roleId=b.id
+        <trim prefix="where" suffixOverrides="and">
+            <if test="userId!=null">
+                a.userId=#{userId}
+            </if>
+        </trim>
+    </select>
 </mapper>

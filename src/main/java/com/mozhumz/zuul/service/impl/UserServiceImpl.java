@@ -11,6 +11,7 @@ import com.mozhumz.zuul.model.dto.CheckTokenDto;
 import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.*;
+import com.mozhumz.zuul.model.qo.UserRoleQo;
 import com.mozhumz.zuul.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mozhumz.zuul.utils.MD5Util;
@@ -18,10 +19,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import top.lshaci.framework.common.exception.BaseException;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -86,6 +89,19 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
         BeanUtils.copyProperties(user1,userDto);
         userDto.setToken(tokenStr);
         userDto.setPassword(null);
+        //判断用户是否有多种角色
+        UserRoleQo userRoleQo=new UserRoleQo();
+        userRoleQo.setUserId(userDto.getId());
+        List<Role>roleList=userMapper.findUserRoleList(userRoleQo);
+        if(CollectionUtils.isEmpty(roleList)){
+            throw new BaseException(ErrorCode.ROLE_INIT_ERR.desc);
+        }
+        userDto.setRoleList(roleList);
+        if(roleList.size()==1){
+            //只有一个角色 直接设置到session
+            userDto.setRole(roleList.get(0));
+        }
+
         return userDto;
     }
 

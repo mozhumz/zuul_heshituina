@@ -3,6 +3,7 @@ package com.mozhumz.zuul.utils;
 import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -11,6 +12,7 @@ import top.lshaci.framework.web.exception.LoginException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.time.Duration;
 
 /**
  * @author huyuanjia
@@ -47,5 +49,10 @@ public class SessionUtil {
         }
         SessionUser userDto= (SessionUser) redisTemplate.opsForValue().get(CommonConstant.globalSessionUser+token);
         return userDto;
+    }
+
+    public static void setSessionUser(Long sessionSeconds,SessionUser userDto){
+        Duration duration = Duration.ofSeconds(sessionSeconds);
+        redisTemplate.opsForValue().set(CommonConstant.globalSessionUser + userDto.getToken(), userDto, duration);
     }
 }

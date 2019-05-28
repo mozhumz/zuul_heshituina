@@ -1,5 +1,6 @@
 package com.mozhumz.zuul.model.dto;
 
+import com.mozhumz.zuul.model.entity.Role;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -43,6 +45,13 @@ public class SessionUser implements Serializable {
     private Integer state;
 
     private String token;
+
+    private List<Role> roleList;
+
+    @ApiModelProperty(value = "当前登录角色")
+    private Role role;
+
+
 
 
 }

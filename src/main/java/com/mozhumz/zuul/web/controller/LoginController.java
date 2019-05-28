@@ -2,11 +2,14 @@ package com.mozhumz.zuul.web.controller;
 
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.constant.CommonConstant;
+import com.mozhumz.zuul.enums.ErrorCode;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
 import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
+import com.mozhumz.zuul.model.entity.Role;
 import com.mozhumz.zuul.model.entity.User;
 import com.mozhumz.zuul.service.IUserService;
+import com.mozhumz.zuul.utils.SessionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import top.lshaci.framework.common.exception.BaseException;
 import top.lshaci.framework.web.model.JsonResponse;
 
 import javax.annotation.Resource;
@@ -56,8 +60,20 @@ public class LoginController {
         //登录成功 设置session 前端跳转到webUrl
         HttpSession session = request.getSession();
         session.setAttribute(CommonConstant.token, userDto.getToken());
-        Duration duration = Duration.ofSeconds(sessionSeconds);
-        redisTemplate.opsForValue().set(CommonConstant.globalSessionUser + userDto.getToken(), userDto, duration);
+        SessionUtil.setSessionUser(sessionSeconds,userDto);
+
+        return JsonResponse.success(userDto);
+    }
+
+    @ApiOperation(value = "多角色时-设置角色")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public JsonResponse<SessionUser> setRole(@RequestBody Role role) {
+        if(role==null||!CheckParamsUtil.check(role.getName(),role.getId()+"")){
+            throw new BaseException(ErrorCode.PARAM_ERR.desc);
+        }
+        SessionUser userDto=SessionUtil.getLoginUser();
+        userDto.setRole(role);
+        SessionUtil.setSessionUser(sessionSeconds,userDto);
 
         return JsonResponse.success(userDto);
     }
