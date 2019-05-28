@@ -7,13 +7,13 @@
    },
    methods:{
      open(msg) {
-                     this.$alert(msg, 'ss', {
+                         this.$alert(msg, '提示', {
                        confirmButtonText: '确定',
                        callback: action => {
-                         this.$message({
-                           type: 'info',
-                           message: `action: ${ action }`
-                         });
+//                         this.$message({
+//                           type: 'info',
+//                           message: `action: ${ action }`
+//                         });
                        }
                      });
                    }
@@ -29,7 +29,8 @@ console.log(webUrl);
      console.log(loginV.username);
      console.log(loginV.password);
      if(!loginV.password||!loginV.username){
-        alert("用户名或密码不能为空");
+//        alert("用户名或密码不能为空");
+        loginV.open("用户名或密码不能为空");
         return false;
      }
      var param={username:loginV.username,password:hex_md5(loginV.password+DEFAULT_KEY)};
