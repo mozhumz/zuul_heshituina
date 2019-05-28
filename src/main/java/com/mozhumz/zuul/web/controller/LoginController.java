@@ -79,9 +79,10 @@ public class LoginController {
     }
 
     @ApiOperation(value = "退出")
-    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
+    @RequestMapping(value = "/logOut", method = RequestMethod.GET)
     public JsonResponse<String> logOut() {
         request.getSession().invalidate();
+        System.out.println("out-ok");
         return JsonResponse.success(null);
     }
 
