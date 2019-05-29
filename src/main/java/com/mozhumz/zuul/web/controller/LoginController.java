@@ -66,7 +66,7 @@ public class LoginController {
     }
 
     @ApiOperation(value = "多角色时-设置角色")
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/setRole", method = RequestMethod.POST)
     public JsonResponse<SessionUser> setRole(@RequestBody Role role) {
         if(role==null||!CheckParamsUtil.check(role.getName(),role.getId()+"")){
             throw new BaseException(ErrorCode.PARAM_ERR.desc);

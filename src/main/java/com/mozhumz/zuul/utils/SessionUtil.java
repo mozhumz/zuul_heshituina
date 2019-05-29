@@ -1,9 +1,11 @@
 package com.mozhumz.zuul.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.hyj.util.common.CommonUtil;
 import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import net.sf.json.JSONObject;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -13,6 +15,7 @@ import top.lshaci.framework.web.exception.LoginException;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.time.Duration;
+import java.util.Map;
 
 /**
  * @author huyuanjia
@@ -47,12 +50,17 @@ public class SessionUtil {
         if(token==null){
             throw new LoginException();
         }
-        SessionUser userDto= (SessionUser) redisTemplate.opsForValue().get(CommonConstant.globalSessionUser+token);
+        String json= (String) redisTemplate.opsForValue().get(CommonConstant.globalSessionUser+token);
+        SessionUser userDto= (SessionUser) JSON.parse(json);
+
         return userDto;
     }
 
     public static void setSessionUser(Long sessionSeconds,SessionUser userDto){
         Duration duration = Duration.ofSeconds(sessionSeconds);
-        redisTemplate.opsForValue().set(CommonConstant.globalSessionUser + userDto.getToken(), userDto, duration);
+
+        redisTemplate.opsForValue().set(CommonConstant.globalSessionUser + userDto.getToken(),
+                JSONObject.fromObject(userDto).toString(), duration);
     }
+
 }
