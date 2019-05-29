@@ -1,6 +1,7 @@
 package com.mozhumz.zuul.utils;
 
-import org.apache.commons.collections4.CollectionUtils;
+
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 

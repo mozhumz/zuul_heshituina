@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mozhumz.zuul.mapper.ITokenMapper;
 import com.mozhumz.zuul.model.entity.Token;
+import com.mozhumz.zuul.model.vo.JsonResponse;
 import com.mozhumz.zuul.utils.SessionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import top.lshaci.framework.web.model.JsonResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class TestController {
 
 
     @ApiOperation(value = "添加")
-    @RequestMapping(value = "/testAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "/testAdd", method = RequestMethod.GET)
     public Object testAdd() {
 //        Token token=new Token();
 //        token.setToken("2");
@@ -44,9 +44,8 @@ public class TestController {
 //        Wrapper wrapper=new UpdateWrapper(token2);
 //        tokenMapper.update(token,wrapper);
 //        Duration duration=Duration.ofMinutes(1);
-        SessionUtil.redisTemplate.opsForValue().set("hyj0508-2","ooo");
+        SessionUtil.setSessionUser(null,null);
 
-        request.getSession().setAttribute("hyj0508","sss");
 
         return JsonResponse.success("jj");
     }

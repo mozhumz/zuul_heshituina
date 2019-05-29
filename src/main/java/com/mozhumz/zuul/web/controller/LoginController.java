@@ -1,5 +1,6 @@
 package com.mozhumz.zuul.web.controller;
 
+import com.hyj.util.exception.BaseException;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.enums.ErrorCode;
@@ -8,6 +9,7 @@ import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.Role;
 import com.mozhumz.zuul.model.entity.User;
+import com.mozhumz.zuul.model.vo.JsonResponse;
 import com.mozhumz.zuul.service.IUserService;
 import com.mozhumz.zuul.utils.SessionUtil;
 import io.swagger.annotations.Api;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import top.lshaci.framework.common.exception.BaseException;
-import top.lshaci.framework.web.model.JsonResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

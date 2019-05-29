@@ -10,9 +10,9 @@ import com.mozhumz.zuul.model.entity.Token;
 import com.mozhumz.zuul.model.entity.TokenWeb;
 import com.mozhumz.zuul.utils.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;

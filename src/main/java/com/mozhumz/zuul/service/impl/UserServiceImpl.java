@@ -3,6 +3,7 @@ package com.mozhumz.zuul.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.hyj.util.exception.BaseException;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.enums.ErrorCode;
 import com.mozhumz.zuul.mapper.*;
@@ -20,7 +21,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import top.lshaci.framework.common.exception.BaseException;
 
 import javax.annotation.Resource;
 import java.util.Date;
