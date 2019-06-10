@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -16,10 +17,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-
+@Slf4j
 public class GsonConfig implements JsonSerializer, JsonDeserializer {
 
-    private static final Log logger = LogFactory.getLog(GsonConfig.class);
 
     public JsonElement serialize(Date arg0, Type arg1, JsonSerializationContext arg2) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -33,7 +33,7 @@ public class GsonConfig implements JsonSerializer, JsonDeserializer {
         try {
             date = sdf.parse(arg0.getAsJsonPrimitive().getAsString());
         } catch (ParseException e) {
-            logger.error("UtilDateGSON deserialize error.", e);
+            log.error("UtilDateGSON deserialize error.", e);
         }
 
         return date;
