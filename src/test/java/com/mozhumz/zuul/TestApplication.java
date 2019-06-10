@@ -7,6 +7,7 @@ import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.mapper.IRoleMapper;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.Role;
+import com.mozhumz.zuul.utils.SessionUtil;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +35,14 @@ public class TestApplication {
     public void testUpdate(){
         SessionUser userDto=new SessionUser();
         userDto.setToken("ss");
+        userDto.setUpdateDate(new Date());
 //        Duration duration=Duration.ofMinutes(1);
         redisTemplate.opsForValue().set(CommonConstant.globalSessionUser ,
-                JSONObject.fromObject(userDto).toString());
+                SessionUtil.gson.toJson(userDto));
 
         String json= (String) redisTemplate.opsForValue().get(CommonConstant.globalSessionUser);
         System.out.println(json);
-        SessionUser userDto2=  JSON.parseObject(json,SessionUser.class);
+        SessionUser userDto2=  SessionUtil.gson.fromJson(json,SessionUser.class);
         System.out.println(userDto2);
 //        QueryWrapper<Role> queryWrapper=new QueryWrapper<>();
 //        queryWrapper.eq("id",1);
