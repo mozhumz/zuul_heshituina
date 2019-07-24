@@ -22,7 +22,7 @@ import java.util.Properties;
  * @since 1.0.1
  */
 public class CodeGenerator {
-
+    public static String[]skipTables={"t_role","t_app","t_app_role","t_token","t_token_web","t_user","t_user_role"};
     /**
      * Project package
      */
@@ -79,8 +79,8 @@ public class CodeGenerator {
         gc.setSwagger2(true);  // 实体属性 Swagger2 注解
         gc.setMapperName("I%sMapper");
         gc.setXmlName("%sMapper");
-        gc.setServiceName("I%sService");
-        gc.setServiceImplName("%sServiceImpl");
+//        gc.setServiceName("I%sService");
+//        gc.setServiceImplName("%sServiceImpl");
         gc.setBaseResultMap(true);
         gc.setActiveRecord(true);
 
@@ -130,7 +130,7 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
-//        strategy.setExclude("no");//需要排除的表名
+        strategy.setExclude(skipTables);//需要排除的表名
         strategy.setTablePrefix("t_");
 
         mpg.setGlobalConfig(gc);
