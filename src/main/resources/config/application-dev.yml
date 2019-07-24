@@ -4,7 +4,7 @@ server:
 # spring
 spring:
   application:
-    name: zuul
+    name: hstn
 #  session:
 #    store-type: redis
 #    timeout: 60
@@ -39,9 +39,9 @@ zuul:
 #    - '*'
   routes:
 
-    zuul:
-      path: /zuul/**
-      serviceId: zuul
+    hstn:
+      path: /hstn/**
+      serviceId: hstn
     usermanage:
       path: /usermanage/**
       serviceId: usermanage

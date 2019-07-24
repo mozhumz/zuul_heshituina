@@ -1,13 +1,10 @@
 package com.mozhumz.zuul.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hyj.util.exception.BaseException;
 import com.hyj.util.param.CheckParamsUtil;
 import com.mozhumz.zuul.enums.ErrorCode;
 import com.mozhumz.zuul.mapper.*;
-import com.mozhumz.zuul.model.dto.AddUserDto;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
 import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
@@ -19,7 +16,6 @@ import com.mozhumz.zuul.utils.MD5Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -57,14 +53,14 @@ public class UserServiceImpl extends ServiceImpl<IUserMapper, User> implements I
     public SessionUser login(LoginDto user) {
         //账号密码检查
         if (user == null || !CheckParamsUtil.check(user.getUsername(), user.getPassword())) {
-            throw new BaseException(ErrorCode.LOGIN_ERR.desc);
+            throw new BaseException(ErrorCode.LOGIN_ERR.desc,ErrorCode.LOGIN_ERR.code);
         }
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("username",user.getUsername());
         User user1 = userMapper.selectOne(wrapper);
         if (user1 == null
                 || !MD5Util.checkPwd(user.getPassword(),user1.getPassword())) {
-            throw new BaseException(ErrorCode.LOGIN_ERR.desc);
+            throw new BaseException(ErrorCode.LOGIN_ERR.desc,ErrorCode.LOGIN_ERR.code);
         }
         //存储token
         String tokenStr= UUID.randomUUID().toString();

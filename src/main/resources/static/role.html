@@ -5,14 +5,15 @@
     <title>登录</title>
     <link rel="stylesheet"  href="static/css/element-ui.css">
     <script src="static/js/common/vue.js"></script>
-    <script src="static/js/common/element-ui.js"></script>
     <script src="static/js/common/jquery-3.4.1.min.js"></script>
-    <script src="static/js/common/util.js"></script>
     <script src="static/js/common/md5.js"></script>
     <script src="static/js/common/api.js"></script>
+    <script src="static/js/common/element-ui.js"></script>
     <script src="static/js/common/user.js"></script>
+    <script src="static/js/common/util.js"></script>
     <script src="static/js/common/cookieUtil.js"></script>
-    <script src="static/js/main.js"></script>
+    <script src="static/js/role.js"></script>
+
 </head>
 <style>
     .el-row {
@@ -32,25 +33,25 @@
     <div style="height:50px;"></div>
     <div id="main" style="text-align:center;width:30%;margin:0 auto">
         <el-row :gutter="20">
-            <el-input type="text"  v-model="username" placeholder="请输入账号" autofocus="true"></el-input>
+            <template>
+                <el-select clearable  v-model="roleId" placeholder="请选择角色">
+                    <el-option
+                            v-for="item in roleList"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.id">
+                    </el-option>
+                </el-select>
+            </template>
         </el-row>
-        <el-row :gutter="20">
-            <el-input type="text" placeholder="请输入密码" v-model="password" show-password></el-input>
-        </el-row>
-        <template>
-            <el-button style="width:61.80%" type="primary" id="loginBtn" >登录</el-button>
-        </template>
 
         <el-row :gutter="20">
-            <el-col :span="6">
-<!--                <div class="grid-content bg-purple"><el-button>忘记密码</el-button></div>-->
-                <template>
-                    <el-button type="text" id="forgetPwd">忘记密码</el-button>
-                </template>
-            </el-col>
-
-
+            <template>
+                <el-button style="width:30%" type="primary" id="chooseRole" >确定</el-button>
+            </template>
         </el-row>
+
+
 
 
 

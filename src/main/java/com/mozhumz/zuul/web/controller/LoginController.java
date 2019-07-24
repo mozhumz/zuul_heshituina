@@ -2,14 +2,14 @@ package com.mozhumz.zuul.web.controller;
 
 import com.hyj.util.exception.BaseException;
 import com.hyj.util.param.CheckParamsUtil;
+import com.hyj.util.web.JsonResponse;
 import com.mozhumz.zuul.constant.CommonConstant;
 import com.mozhumz.zuul.enums.ErrorCode;
 import com.mozhumz.zuul.model.dto.CheckTokenDto;
 import com.mozhumz.zuul.model.dto.LoginDto;
 import com.mozhumz.zuul.model.dto.SessionUser;
 import com.mozhumz.zuul.model.entity.Role;
-import com.mozhumz.zuul.model.entity.User;
-import com.mozhumz.zuul.model.vo.JsonResponse;
+import com.mozhumz.zuul.service.IRoleService;
 import com.mozhumz.zuul.service.IUserService;
 import com.mozhumz.zuul.utils.SessionUtil;
 import io.swagger.annotations.Api;
@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.Duration;
 
 /**
  * @author huyuanjia
@@ -45,6 +44,8 @@ public class LoginController {
     private RedisTemplate redisTemplate;
     @Resource
     private IUserService userService;
+    @Resource
+    private IRoleService roleService;
 
     @Value("${login.url}")
     private String loginUrl;
@@ -62,17 +63,21 @@ public class LoginController {
         session.setAttribute(CommonConstant.token, userDto.getToken());
         SessionUtil.setSessionUser(sessionSeconds,userDto);
 
-        return JsonResponse.success(userDto);
+        return JsonResponse .success(userDto);
     }
 
     @ApiOperation(value = "多角色时-设置角色")
     @RequestMapping(value = "/setRole", method = RequestMethod.POST)
     public JsonResponse<SessionUser> setRole(@RequestBody Role role) {
-        if(role==null||!CheckParamsUtil.check(role.getName(),role.getId()+"")){
+        if(role==null||!CheckParamsUtil.check(role.getId()+"")){
             throw new BaseException(ErrorCode.PARAM_ERR.desc);
         }
         SessionUser userDto=SessionUtil.getLoginUser();
-        userDto.setRole(role);
+        Role role1=roleService.getById(role.getId());
+        if(role1==null){
+            throw new BaseException(ErrorCode.ROLE_NOT_EXIST_ERR.desc);
+        }
+        userDto.setRole(role1);
         SessionUtil.setSessionUser(sessionSeconds,userDto);
 
         return JsonResponse.success(userDto);
@@ -80,9 +85,10 @@ public class LoginController {
 
     @ApiOperation(value = "退出")
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
-    public JsonResponse<String> logOut() {
+    public JsonResponse<String> logOut() throws IOException {
         request.getSession().invalidate();
         System.out.println("out-ok");
+        response.sendRedirect(loginUrl);
         return JsonResponse.success(null);
     }
 

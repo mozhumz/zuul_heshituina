@@ -8,10 +8,9 @@ $.ajax({
              url:url,
              data:JSON.stringify(param),
              success:function(res){
-                 console.log(res);
-//                 window.location.href='http://www.baidu.com';
-                    if(!res.status){
-                        alert(res.message);
+                    if(!res.status&&res.code==10005){
+                        //重定向到登录页
+                        window.location.href=zuulUrl;
                     }
                     result= res;
              }
@@ -20,9 +19,9 @@ $.ajax({
     return result;
 }
 
-function getWebUrl(loginHtml){
+function getWebUrl(html){
     try{
-        var s=loginHtml.split('?');
+        var s=html.split('?');
         if(s.length>1){
             return s[1].split('=')[1];
         }
