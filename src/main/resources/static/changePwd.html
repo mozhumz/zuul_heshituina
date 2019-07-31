@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>重置密码</title>
+    <link rel="stylesheet"  href="static/css/element-ui.css">
+    <script src="static/js/common/vue.js"></script>
+    <script src="static/js/common/element-ui.js"></script>
+    <script src="static/js/common/jquery-3.4.1.min.js"></script>
+    <script src="static/js/common/util.js"></script>
+    <script src="static/js/common/md5.js"></script>
+    <script src="static/js/common/api.js"></script>
+    <script src="static/js/common/user.js"></script>
+    <script src="static/js/common/cookieUtil.js"></script>
+    <script src="static/js/pwd.js"></script>
+</head>
+<style>
+    .el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+</style>
+<body>
+    <div style="text-align:center;width:50%;margin:0 auto;    color: #12a1e9;
+    font-family: 华文行楷;font-weight: bold;font-size:40px;">
+
+        <h1>何氏推拿-忘记密码</h1>
+    </div>
+    <div style="height:50px;"></div>
+    <div id="main" style="text-align:center;width:30%;margin:0 auto">
+
+            <el-form ref="pwdForm" :model="changePwdDto"  label-width="100px" :rules="userRules" class="demo-ruleForm">
+                <el-form-item label="账号" prop="username">
+                    <el-input  v-model="changePwdDto.username"  ></el-input>
+                </el-form-item>
+
+                <el-form-item label="邮箱" prop="email">
+                    <el-input  v-model="changePwdDto.email"  placeholder="请输入该账号设置的邮箱"></el-input>
+                    <el-button type="primary" @click="sendEmailCode" :disabled="sendCodeBtn_f">{{sendCodeTxt}}</el-button>
+                </el-form-item>
+
+                <el-form-item label="验证码" prop="code">
+                    <el-input  v-model="changePwdDto.code"  ></el-input>
+                </el-form-item>
+                <el-form-item label="新密码" prop="newPwd">
+                    <el-input  v-model="changePwdDto.newPwd" type="password" ></el-input>
+                </el-form-item>
+
+                <el-form-item label="确认密码" prop="password2">
+                    <el-input  v-model="changePwdDto.password2" type="password" ></el-input>
+                </el-form-item>
+                <el-form-item >
+                    <el-button type="primary" @click="changePwd('pwdForm')" :disabled="lazyBtn_f">确定</el-button>
+                </el-form-item>
+            </el-form>
+
+
+
+    </div>
+
+
+
+
+
+
+</body>
+<script>
+
+</script>
+</html>

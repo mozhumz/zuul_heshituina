@@ -67,4 +67,32 @@ public class SessionUtil {
                 gson.toJson(userDto),duration);
     }
 
+    /**
+     * 设置redis KV
+     * @param k
+     * @param v
+     * @param seconds 失效秒值
+     */
+    public static void setRedisKV(String k,String v,long seconds){
+        Duration duration = Duration.ofSeconds(seconds);
+        redisTemplate.opsForValue().set(k,v,duration);
+    }
+
+    /**
+     * 根据key获取redis V
+     * @param k
+     * @return
+     */
+    public static String getRedisV(String k){
+        return (String) redisTemplate.opsForValue().get(k);
+    }
+
+    /**
+     * 获取用户验证码
+     * @return
+     */
+    public static String getUserCode(){
+        return getRedisV(CommonConstant.userCode+ getLoginUser().getUsername());
+    }
+
 }

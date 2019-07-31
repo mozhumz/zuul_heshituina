@@ -5,6 +5,7 @@
    data:{
      username: '',
  	 password: '',
+ 	 lazyBtn_f:false,
    },
    methods:{
      open(msg,type) {
@@ -15,6 +16,32 @@
             message: msg,
             type: type
         });
+     },
+     disableBtn(type){
+             if(!type){
+               mainV.lazyBtn_f=true;
+             }else{
+               mainV.sendCodeBtn_f=true;
+             }
+           },
+     enableBtn(type){
+         setTimeout(function(){
+             if(!type){
+               mainV.lazyBtn_f=false;
+             }else{
+               mainV.sendCodeBtn_f=false;
+             }
+           },1000);
+     },
+     open2(msg) {
+       var type='error';
+       this.$message({
+           message: msg,
+           type: type
+       });
+    },
+     openChangePwd(){
+        open('changePwd.html');
      }
 
    }
@@ -38,15 +65,16 @@ var chooseBox='<template>'+
  $("#loginBtn").click(
 
      function(){
-     console.log(mainV.username);
-     console.log(mainV.password);
+     mainV.disableBtn();
      if(!mainV.password||!mainV.username){
 //        alert("用户名或密码不能为空");
         mainV.open("用户名或密码不能为空");
+        mainV.enableBtn();
         return false;
      }
      var param={username:mainV.username,password:hex_md5(mainV.password+DEFAULT_KEY)};
      var res=ajax("POST",loginUrl,param);
+     mainV.enableBtn();
      if(res.status){
         setCookie(userCookieName,res.data,120);
         //判断是否有多个角色
