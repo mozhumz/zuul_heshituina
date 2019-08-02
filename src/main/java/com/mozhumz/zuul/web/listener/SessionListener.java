@@ -43,6 +43,7 @@ public class SessionListener implements HttpSessionListener {
         // session失效后 退出各个web应用
         String tokenStr = (String) se.getSession().getAttribute(CommonConstant.token);
         if (CheckParamsUtil.check(tokenStr)) {
+            log.info("t_token update start");
             //修改t_token state=2
             Token param = new Token();
             param.setToken(tokenStr);
@@ -53,18 +54,22 @@ public class SessionListener implements HttpSessionListener {
                 return;
             }
             tokenMapper.deleteById(token.getId());
+            log.info("t_token update ok");
 
             //处理t_token_web记录
             Map<String, Object> map = new HashMap<>();
             map.put("tokenId", token.getId());
             List<TokenWeb> list = tokenWebMapper.selectByMap(map);
+            log.info("List<TokenWeb>:"+list);
             if(!CollectionUtils.isEmpty(list)){
                 for (TokenWeb tokenWeb : list) {
                     //调用每个web应用的退出接口
+                    log.info("logOutWeb start:"+tokenWeb);
                     HttpUtil.logOutWeb(tokenWeb.getOutUrl(),tokenWeb.getSessionId());
                     //删除记录
                     tokenWebMapper.deleteById(tokenWeb.getId());
                 }
+
             }
 
         }
